@@ -1,0 +1,26 @@
+.editor-visual-editor .wp-block-ttfb-click-to-tweet,
+.wp-block-ttfb-click-to-tweet a{
+    background-color: #1DA1F2;
+    color: #fff;
+    font-size: 24px;
+    border-radius: 4px;
+    line-height: 1.4;
+    padding: 1rem 2rem;
+    display: block;
+    transition: background-color 0.2s ease;
+}
+
+.wp-block-ttfb-click-to-tweet a:hover{
+    background-color: rgba(29, 161, 242, 0.84);
+    color: #fff;
+}
+
+.ttfb-click-to-tweet-label{
+    font-size: 70%;
+    margin: 1rem 0 0 0;
+    display: flex;
+    width: 100%;
+    align-content: center; 
+}
+
+.ttfb-click-to-tweet-label span{ margin-left: 0.5rem; }
