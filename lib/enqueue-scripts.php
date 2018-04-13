@@ -1,9 +1,8 @@
 <?php
-
 /**
  * Enqueue block editor only JavaScript and CSS
  */
-function jsforwpblocks_editor_scripts()
+function ttfb_blocks_editor_scripts()
 {
 
     // Make paths variables so we don't write em twice ;)
@@ -12,47 +11,58 @@ function jsforwpblocks_editor_scripts()
 
     // Enqueue the bundled block JS file
     wp_enqueue_script(
-        'jsforwp-blocks-js',
+        'ttfb-blocks-js',
         plugins_url( $blockPath, __FILE__ ),
-        [ 'wp-i18n', 'wp-element', 'wp-blocks', 'wp-components' ],
+        [ 'wp-i18n', 'wp-element', 'wp-blocks', 'wp-components', 'wp-api' ],
         filemtime( plugin_dir_path(__FILE__) . $blockPath )
     );
 
+    // Pass in REST URL
+    wp_localize_script(
+      'ttfb-blocks-js',
+      'ttfb_blocks_globals',
+      [
+        'rest_url' => esc_url( rest_url() )
+      ]);
+
+
     // Enqueue optional editor only styles
     wp_enqueue_style(
-        'jsforwp-blocks-editor-css',
+        'ttfb-blocks-editor-css',
         plugins_url( $editorStylePath, __FILE__),
         [ 'wp-blocks' ],
         filemtime( plugin_dir_path( __FILE__ ) . $editorStylePath )
     );
 
 }
+
 // Hook scripts function into block editor hook
-add_action( 'enqueue_block_editor_assets', 'jsforwpblocks_editor_scripts' );
+add_action( 'enqueue_block_editor_assets', 'ttfb_blocks_editor_scripts' );
 
 
 /**
  * Enqueue front end and editor JavaScript and CSS
  */
-function jsforwpblocks_scripts()
+function ttfb_blocks_scripts()
 {
+
     // Make paths variables so we don't write em twice ;)
     $blockPath = '../assets/js/frontend.blocks.js';
     $stylePath = '../assets/css/blocks.style.css';
 
-    if( !is_admin() ) {
-        // Enqueue the bundled block JS file
+    // Enqueue the bundled block JS file
+    if( is_admin() ){
         wp_enqueue_script(
-            'jsforwp-blocks-frontend',
+            'ttfb-blocks-frontend-js',
             plugins_url( $blockPath, __FILE__ ),
-            [],
+            [ 'wp-i18n', 'wp-element', 'wp-blocks', 'wp-components', 'wp-api' ],
             filemtime( plugin_dir_path(__FILE__) . $blockPath )
         );
     }
 
     // Enqueue frontend and editor block styles
     wp_enqueue_style(
-        'jsforwp-blocks',
+        'ttfb-blocks-css',
         plugins_url($stylePath, __FILE__),
         [ 'wp-blocks' ],
         filemtime(plugin_dir_path(__FILE__) . $stylePath )
@@ -61,4 +71,4 @@ function jsforwpblocks_scripts()
 }
 
 // Hook scripts function into block editor hook
-add_action('enqueue_block_assets', 'jsforwpblocks_scripts');
+add_action('enqueue_block_assets', 'ttfb_blocks_scripts');

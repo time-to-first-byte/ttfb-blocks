@@ -26,6 +26,10 @@ export default class Inspector extends Component {
                     value={ blockAlignment }
                     onChange={ blockAlignment => setAttributes( { blockAlignment } ) }
                 />
+                <AlignmentToolbar
+                    value={ textAlignment }
+                    onChange={ textAlignment => setAttributes( { textAlignment } ) }
+                />
             </BlockControls>
         );
     }

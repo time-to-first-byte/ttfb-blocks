@@ -9,9 +9,37 @@
     letter-spacing: 1.5px;
     border-bottom: 1px solid transparent;
     font-size: 2.3rem;
+    margin: 0 0 2rem 0;
+    line-height: 1;
 }
 
 
 .wp-block-ttfb-chapter .sup-title{
     font-size: 55%;
+}
+
+@media (min-width: 52em) {
+    .ttfb-block-columns{
+        display: grid;
+        grid-gap: 0 1.5rem;
+        grid-row-gap: 1.5rem;
+        align-items: center;
+    }
+
+    .ttfb-block-columns .layout-column-1 { grid-column: 1; }
+    .ttfb-block-columns .layout-column-2 { grid-column: 2; }
+
+    .ttfb-block-columns.has-2-columns {
+        grid-auto-columns: 50%;
+    }
+
+    .ttfb-block-columns *{
+        margin-top: 0 !important;
+        margin-bottom: 1.5rem !important;
+    }
+
+    .ttfb-block-columns .layout-column-1 > :last-child,
+    .ttfb-block-columns .layout-column-2 > :last-child{
+        margin-bottom: 0 !important;
+    }
 }

@@ -27,7 +27,7 @@ icons.remove = <svg width='20px' height='20px' viewBox='0 0 100 100' xmlns='http
     />
 </svg>;
 
-icons.shapter = <svg className='dashicon dashicons-align-full-width' xmlns='http://www.w3.org/2000/svg'
+icons.chapter = <svg className='dashicon dashicons-align-full-width' xmlns='http://www.w3.org/2000/svg'
 width='20' height='20' viewBox='0 0 20 20'>
     <path d='M17 13V3H3v10h14zM5 17h10v-2H5v2z' />
 </svg>;

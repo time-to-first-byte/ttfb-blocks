@@ -4,20 +4,23 @@
 const { __ } = wp.i18n;
 const { Component } = wp.element;
 const {
-  InspectorControls,
-  BlockDescription,
-  ColorPalette,
-  AlignmentToolbar,
-  BlockAlignmentToolbar,
-  BlockControls,
+    InspectorControls,
+    ColorPalette,
 } = wp.blocks;
 const {
-  Toolbar,
-  Button,
-  PanelBody,
-  PanelRow,
-  PanelColor,
-  FormToggle,
+    Button,
+    ButtonGroup,
+    CheckboxControl,
+    PanelBody,
+    PanelRow,
+    PanelColor,
+    RadioControl,
+    RangeControl,
+    TextControl,
+    TextareaControl,
+    ToggleControl,
+    Toolbar,
+    SelectControl
 } = wp.components;
 
 /**
@@ -30,7 +33,7 @@ export default class Inspector extends Component {
   }
   render() {
 
-    const { attributes: { blockBackgroundColor, blockBackgroundColor2, blockTextColor, blockHrColor, displayText, displayImage, toggleHeadingLevel }, setAttributes } = this.props;
+    const { attributes: { blockBackgroundColor, blockTextColor, blockHrColor, blockId, blockLayout }, setAttributes } = this.props;
 
     return (
       <InspectorControls key="inspector">
@@ -44,24 +47,33 @@ export default class Inspector extends Component {
             </PanelRow>
         </PanelBody>
 
+         <PanelBody>
+            <TextControl
+                label={ __( 'Chapter ID', 'jsforwpblocks' ) }
+                value={ blockId }
+                onChange={ blockId => setAttributes( { blockId } ) }
+            />
+        </PanelBody>
+
+        <PanelBody>
+            <RangeControl
+                beforeIcon="arrow-left-alt2"
+                afterIcon="arrow-right-alt2"
+                label={ __( 'Layout option', 'jsforwpblocks' ) }
+                value={ blockLayout }
+                onChange={ blockLayout => setAttributes( { blockLayout } ) }
+                min={ 1 }
+                max={ 3 }
+            />
+        </PanelBody>
+
         <PanelColor
-            title={ __( 'Background color 1', 'jsforwpblocks' ) }
+            title={ __( 'Background color', 'jsforwpblocks' ) }
             colorValue={ blockBackgroundColor }
         >
             <ColorPalette
                 value={ blockBackgroundColor }
                 onChange={ blockBackgroundColor => setAttributes( { blockBackgroundColor } ) }
-            />
-        </PanelColor>
-
-        <PanelColor
-            title={ __( 'Background color 2', 'jsforwpblocks' ) }
-                value={ this.props.attributes.blockBackgroundColor2 }
-            colorValue={ blockBackgroundColor2 }
-        >
-            <ColorPalette
-                value={ blockBackgroundColor2 }
-                onChange={ blockBackgroundColor2 => setAttributes( { blockBackgroundColor2 } ) }
             />
         </PanelColor>
         
@@ -85,39 +97,7 @@ export default class Inspector extends Component {
                 value={ blockHrColor }
                 onChange={ blockHrColor => setAttributes( { blockHrColor } ) }
             />
-        </PanelColor>
-
-        <PanelBody 
-            title={ __( 'Display Options' ) }
-            //initialOpen={ false }
-        >
-            
-            <PanelRow>
-                <ToggleControl
-                    label={ __( 'Display Main Text', 'jsforwpblocks' ) }
-                    checked={ displayText }
-                    onChange={ displayText => setAttributes( { displayText } ) }
-                />
-            </PanelRow>
-
-            <PanelRow>
-                <ToggleControl
-                    label={ __( 'Display Main Image', 'jsforwpblocks' ) }
-                    checked={ displayImage }
-                    onChange={ displayImage => setAttributes( { displayImage } ) }
-                />
-            </PanelRow>
-
-            <PanelRow>
-                <ToggleControl
-                    label={ __( 'Heading Level', 'jsforwpblocks' ) }
-                    checked={ toggleHeadingLevel }
-                    onChange={ toggleHeadingLevel => setAttributes( { toggleHeadingLevel } ) }
-                />
-            </PanelRow>
-
-        </PanelBody>
-                    
+        </PanelColor> 
 
       </InspectorControls>
     );

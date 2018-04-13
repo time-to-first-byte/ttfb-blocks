@@ -6,27 +6,36 @@
 import classnames from 'classnames';
 import Inspector from './inspector';
 import Controls from './controls';
-import attributes from './attributes';
 import icons from './icons';
+import attributes from './attributes';
 import './style.scss';
 import './editor.scss';
+
+// For columns
+//import memoize from 'memize';
+//import { times } from 'lodash';
 
 
 /**
  * Internal block libraries
  */
-const { __ } = wp.i18n;
+const { __,
+    sprintf 
+} = wp.i18n;
 const {
     registerBlockType,
     RichText,
+    InnerBlocks,
 } = wp.blocks;
 
-const validAlignments = [ 'wide', 'full' ];
- 
-
-
-  
-
+/*const getColumnLayouts = memoize( ( blockLayout ) => {
+	return times( blockLayout, ( n ) => ( {
+		name: `column-${ n + 1 }`,
+		label: sprintf( __( 'Column %d' ), n + 1 ),
+		icon: 'columns',
+	} ) );
+} );
+*/
 /**
  * Register block
  */
@@ -48,113 +57,21 @@ export default registerBlockType(
             }
         },
 
-        /*getEditWrapperProps( attributes ) {
-            const { width } = attributes;
-            if ( [ 'wide', 'full', 'left', 'right' ].indexOf( width ) !== -1 ) {
-                return { 'data-align': width };
-            }
-        },*/
-
         edit: props => {
-            
-            
-/*
-            const onChangeSupTitle = value => {
-                props.setAttributes( { supTitle: value } );
-            };
 
-            const onChangeTitle = value => {
-                props.setAttributes( { mainTitle: value } );
-            };
-
-            const onChangeIntro = value => {
-                props.setAttributes( { intro: value } );
-            };
-
-            const onChangeIntroAlignment = value => {
-                props.setAttributes( { introAlignment: value } );
-            };
-
-            const onChangeBlockAlignment = value => {
-                props.setAttributes( { width: value } );
-            };
-
-            const onChangeBlockBackgroundColor = value => {
-                props.setAttributes( { blockBackgroundColor: value } );
-            }
-
-            const onChangeBlockBackgroundColor2 = value => {
-                props.setAttributes( { blockBackgroundColor2: value } );
-            }
-
-            const onChangeBlockTextColor = value => {
-                props.setAttributes( { blockTextColor: value } );
-            }
-
-            const onChangeBlockHrColor = value => {
-                props.setAttributes( { blockHrColor: value } );
-            }
-
-            const onSelectImage = value => {
-                props.setAttributes( {
-                    imgID: value.id,
-                    imgURL: value.url,
-                    imgAlt: value.alt,
-                } );
-            }
-
-            const onRemoveImage = () => {
-                props.setAttributes({
-                    imgID: null,
-                    imgURL: null,
-                    imgAlt: null,
-                });
-            }
-
-            const onChangeImgAlignment = value => {
-                props.setAttributes( { imgAlignment: value } );
-            };
-
-            const toggleDisplayText = () => {
-                props.setAttributes( { displayText: ! props.attributes.displayText } );
-            }
-
-            const toggleDisplayImage = () => {
-                props.setAttributes( { displayImage: ! props.attributes.displayImage } );
-                
-                if( ! props.attributes.displayImage ){
-                    props.setAttributes( { imgID: null } );
-                }
-                
-            }
-
-            const onToggleHeadingLevel = () => {
-                props.setAttributes( { toggleHeadingLevel: ! props.attributes.toggleHeadingLevel } );
-
-                if( ! props.attributes.toggleHeadingLevel ){
-                    props.setAttributes( { headingLevel: 'h1' } );
-                }else{
-                    props.setAttributes( { headingLevel: 'h2' } );
-                }
-            }*/
-
-            const { attributes: { textAlignment, blockAlignment, message },
-                attributes, isSelected, className, setAttributes } = props;
-
-            let settings =  attributes;
+            const { attributes: { blockAlignment, supTitle, mainTitle, blockBackgroundColor, blockTextColor, blockHrColor, blockId, blockLayout }, attributes, isSelected, className, setAttributes } = props;
+            //const classes = classnames( className, `has-${ blockLayout }-columns` );
 
             return [
                 isSelected && <Inspector { ...{ setAttributes, ...props} } />,
                 isSelected && <Controls { ...{ setAttributes, ...props } }/>,
                 <div 
                     style={ {
-                        backgroundColor: props.attributes.blockBackgroundColor,
-                        background: [ `linear-gradient(to bottom left,${ props.attributes.blockBackgroundColor },${ props.attributes.blockBackgroundColor2 })` ],
-                        color: props.attributes.blockTextColor,
+                        backgroundColor: blockBackgroundColor,
+                        color: blockTextColor,
                     } }
-                    className={ classnames( 'wp-block-ttfb-chapter', {
-                        [ `align${ props.attributes.width }` ]: props.attributes.width,
-                    } ) }
+                    className={ className }
+                    id={ blockId }
                 >
                     <div
                         className={ classnames(
@@ -163,12 +80,13 @@ export default registerBlockType(
                             'mr-auto',
                             'pt3',
                             'pb0',
+                            'px2',
                         ) }
                     >
                         <h2
                             style={ {
-                                color: props.attributes.blockTextColor,
-                                borderBottomColor: props.attributes.blockHrColor,
+                                color: blockTextColor,
+                                borderBottomColor: blockHrColor,
                             } }
                             className={ classnames(
                                 'line-height-2',
@@ -177,7 +95,6 @@ export default registerBlockType(
                                 'm0',
                                 'pb2',
                                 'mb3',
-                                'px2',
                             ) }
                         >
                             <span
@@ -191,13 +108,13 @@ export default registerBlockType(
                                 <RichText
                                     tagName="div"
                                     placeholder={ __( 'Your small title' ) }
-                                    onChange={ onChangeSupTitle }
-                                    value={ props.attributes.supTitle }
+                                    onChange={ supTitle => setAttributes( { supTitle } ) }
+                                    value={ supTitle }
                                 />
                             </span>
                             <span
                                 className={ classnames(
-                                    'title',
+                                    'main-title',
                                     'weight200',
                                     'xxl-text',
                                 ) }
@@ -205,114 +122,24 @@ export default registerBlockType(
                                 <RichText
                                     tagName="div"
                                     placeholder={ __( 'Your main title' ) }
-                                    onChange={ onChangeTitle }
-                                    value={ props.attributes.mainTitle }
+                                    onChange={ mainTitle => setAttributes( { mainTitle } ) }
+                                    value={ mainTitle }
                                 />
                             </span>
                         </h2>
 
                         <div
-                            className={ classnames(
-                                'md-flex'
-                            ) }
-                        >
-                            { props.attributes.displayText ?
-                                <div
-                                    className={ classnames(
-                                        'flex',
-                                        'items-center',
-                                        'justify-center',
-                                        'flex-auto',
-                                        'px2',
-                                        'md-col-6',
-                                    ) }
-                                >
-                                    <RichText
-                                        tagName="div"
-                                        multiline="p"
-                                        placeholder={ __( 'Your content' ) }
-                                        onChange={ onChangeIntro }
-                                        value={ props.attributes.intro } 
-                                        className={ classnames(
-                                            'intro',
-                                            'first-mt0',
-                                            'last-mb0',
-                                            'mb3',
-                                        ) }
-                                        style={ { 
-                                            textAlign: props.attributes.introAlignment,
-                                        } }
-                                        focus={ props.focus }
-                                    />
-                                </div>
-                            : null }
-
-                            { props.attributes.displayImage ?
-                                <div
-                                    className={ classnames(
-                                        'flex',
-                                        'items-center',
-                                        'justify-center',
-                                        'flex-auto',
-                                        'px2',
-                                        'md-col-6',
-                                    ) }
-                                >
-                                    { ! props.attributes.imgID ? (
-                                    
-                                        <div 
-                                            className={ classnames(
-                                                'mb3',
-                                                'image-placeholder',
-                                            ) }
-                                        >
-                                            <MediaUpload
-                                                onSelect={ onSelectImage }
-                                                type="image"
-                                                value={ props.attributes.imgID }
-                                                render={ ( { open } ) => (
-                                                    <Button
-                                                        className={ classnames(
-                                                            "button button-large button-image"
-                                                        ) }
-                                                        onClick={ open }
-                                                    >
-                                                        { icons.upload }
-                                                        { __( ' Upload Image') }
-                                                    </Button>
-                                                ) }
-                                            >
-                                                
-                                            </MediaUpload>
-                                        </div>
-
-                                    ) : (
-
-                                        <div class="relative">
-                                            <img
-                                                className={ classnames(
-                                                    'mb3',
-                                                ) }
-                                                src={ props.attributes.imgURL }
-                                                alt={ props.attributes.imgAlt }
-                                            />
-
-                                            { props.focus ? (
-                                                <Button
-                                                    className="remove-image"
-                                                    onClick={ onRemoveImage }
-                                                >
-                                                    { icons.remove }
-                                                </Button>
-                                            ) : null }
-
-                                        </div>
-                                    )}
-
-                                </div>
-                            : null }
+                                className={ classnames(
+                                    'ttfb-block-columns',
+                                    'has-2-columns'
+                                ) }
+                            >
+                                <InnerBlocks layouts={ [
+                                    { name: 'column-1', label: 'Column 1', icon: 'columns' },
+                                    { name: 'column-2', label: 'Column 2', icon: 'columns' },
+                                ] } />
                         </div>
-
+                            
                     </div>
                 </div>
             ];
@@ -320,18 +147,18 @@ export default registerBlockType(
 
         save: props => {
 
-            const Tag = props.attributes.headingLevel;
+            const { attributes: { blockAlignment, blockBackgroundColor, blockTextColor, supTitle, mainTitle, blockHrColor, blockId, blockLayout }, attributes } = props;
+
+            const Tag = 'h2';
 
             return (
                 <div
                     style={ {
-                        backgroundColor: props.attributes.blockBackgroundColor,
-                        background: [ `linear-gradient(to bottom left,${ props.attributes.blockBackgroundColor },${ props.attributes.blockBackgroundColor2 })` ],
-                        color: props.attributes.blockTextColor,
+                        backgroundColor: blockBackgroundColor,
+                        color: blockTextColor,
                     } }
-                    className={ classnames(
-                        [ `align${ props.attributes.width }` ]
-                    ) }
+                    className={ `align${blockAlignment}` }
+                    id={ blockId }
                 >
                     <div
                         className={ classnames(
@@ -340,6 +167,7 @@ export default registerBlockType(
                             'mr-auto',
                             'pt3',
                             'pb0',
+                            'px2'
                         ) }
                     >
                         <Tag
@@ -350,12 +178,11 @@ export default registerBlockType(
                                 'm0',
                                 'pb2',
                                 'mb3',
-                                'px2',
                                 'h2',
                             ) }
                             style={ {
-                                color: props.attributes.blockTextColor,
-                                borderBottomColor: props.attributes.blockHrColor,
+                                color: blockTextColor,
+                                borderBottomColor: blockHrColor,
                             } }
                         >
                             <span
@@ -366,68 +193,28 @@ export default registerBlockType(
                                     'weight900',
                                 ) }
                             >
-                                { props.attributes.supTitle }
+                                { supTitle }
                             </span>
                             <span
                                 className={ classnames(
+                                    'main-title',
                                     'title',
                                     'weight200',
                                     'xxl-text',
                                 ) }
-                            >{ props.attributes.mainTitle }</span>
+                            >
+                                { mainTitle }
+                            </span>
                         </Tag>
 
                         <div
                             className={ classnames(
-                                'md-flex'
+                                'ttfb-block-columns',
+                                'has-2-columns'
                             ) }
                         >
-                            { props.attributes.displayText ? 
-                                <div
-                                    className={ classnames(
-                                        'flex',
-                                        'items-center',
-                                        'justify-center',
-                                        'flex-auto',
-                                        'px2',
-                                        'md-col-6',
-                                    ) }
-                                    style={ { textAlign: props.attributes.introAlignment } }
-                                >
-                                    <div
-                                        className={ classnames(
-                                            'intro',
-                                            'first-mt0',
-                                            'last-mb0',
-                                            'mb3',
-                                        ) }
-                                    >
-                                        { props.attributes.intro }
-                                    </div>
-                                </div>
-                            : null }
                             
-                            { props.attributes.displayImage && props.attributes.imgURL ? 
-                                <div 
-                                    className={ classnames(
-                                        'flex',
-                                        'items-center',
-                                        'justify-center',
-                                        'flex-auto',
-                                        'px2',
-                                        'md-col-6',
-                                    ) }
-                                >
-                                    <img
-                                        className={ classnames(
-                                            'mb3',
-                                        ) }
-                                        src={props.attributes.imgURL}
-                                        alt={props.attributes.imgAlt}
-                                    />
-                                </div>
-                            : null }
-                            
+                            <InnerBlocks.Content />
                         </div>
                     </div>
                 </div>
