@@ -5,7 +5,7 @@
  * Description: Gutenberg Blocks for TTFB Themes
  * Author: TTFB
  * Author URI: https://ttfb.io
- * Version: 1.0.2
+ * Version: 1.0.3
  * License: GPL2+
  * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
  *
@@ -85,7 +85,7 @@ function ttfb_blocks_critical_css() {
 /*
 * Chapter Block Critical CSS
 */
-//add_action('ttfb_blocks_inline_styles','ttfb_blocks_pillar_critical_styles', 10);
+add_action('ttfb_blocks_inline_styles','ttfb_blocks_pillar_critical_styles', 10);
 function ttfb_blocks_pillar_critical_styles(){
     if( !ttfb_blocks_is_autoptimize_active() ||
         ( !is_single() && !is_page() ) ){

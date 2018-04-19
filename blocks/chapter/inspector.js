@@ -1,7 +1,8 @@
 /**
  * Internal block libraries
  */
-const { __ } = wp.i18n;
+const { __,
+    sprintf, } = wp.i18n;
 const { Component } = wp.element;
 const {
     InspectorControls,
@@ -33,42 +34,56 @@ export default class Inspector extends Component {
   }
   render() {
 
-    const { attributes: { blockBackgroundColor, blockTextColor, blockHrColor, blockId, blockLayout }, setAttributes } = this.props;
+    const { attributes: { blockBackgroundColor, blockTextColor, blockHrColor, blockId, blockLayout, nodeName }, setAttributes } = this.props;
 
     return (
       <InspectorControls key="inspector">
 
         <PanelBody
-            title={ __( 'Chapter Block', 'jsforwpblocks' ) }
+            title={ __( 'Chapter Block', 'ttfb-blocks' ) }
             initialOpen={ false }
         >
             <PanelRow>
-                <p>{ __( 'Chapter block description', 'jsforwpblocks' ) }</p>
+                <p>{ __( 'Chapter block description', 'ttfb-blocks' ) }</p>
             </PanelRow>
         </PanelBody>
 
          <PanelBody>
+            <h3>{ __( 'Heading Settings' ) }</h3>
+            <p>{ __( 'Level' ) }</p>
+            <Toolbar
+                controls={
+                    '123456'.split( '' ).map( ( level ) => ( {
+                        icon: 'heading',
+                        title: sprintf( __( 'Heading %s' ), level ),
+                        isActive: 'H' + level === nodeName,
+                        onClick: () => setAttributes( { nodeName: 'H' + level } ),
+                        subscript: level,
+                    } ) )
+                }
+            />
             <TextControl
-                label={ __( 'Chapter ID', 'jsforwpblocks' ) }
+                label={ __( 'HTML Anchor', 'ttfb-blocks' ) }
                 value={ blockId }
                 onChange={ blockId => setAttributes( { blockId } ) }
             />
         </PanelBody>
 
-        <PanelBody>
-            <RangeControl
-                beforeIcon="arrow-left-alt2"
-                afterIcon="arrow-right-alt2"
-                label={ __( 'Layout option', 'jsforwpblocks' ) }
+         <PanelBody>
+            <SelectControl
+                label={ __( 'Layout', 'ttfb-blocks' ) }
                 value={ blockLayout }
+                options={ [
+                    { value: 'text', label: __( 'Text only', 'ttfb-blocks' ) },
+                    { value: 'image', label: __( 'Image only', 'ttfb-blocks' ) },
+                    { value: 'both', label: __( 'Text and Image', 'ttfb-blocks' ) },
+                ] }
                 onChange={ blockLayout => setAttributes( { blockLayout } ) }
-                min={ 1 }
-                max={ 3 }
             />
         </PanelBody>
 
         <PanelColor
-            title={ __( 'Background color', 'jsforwpblocks' ) }
+            title={ __( 'Background color', 'ttfb-blocks' ) }
             colorValue={ blockBackgroundColor }
         >
             <ColorPalette
@@ -78,7 +93,7 @@ export default class Inspector extends Component {
         </PanelColor>
         
         <PanelColor
-            title={ __( 'Text Color', 'jsforwpblocks' ) }
+            title={ __( 'Text Color', 'ttfb-blocks' ) }
                 value={ this.props.attributes.blockTextColor }
             colorValue={ blockTextColor }
         >
@@ -89,7 +104,7 @@ export default class Inspector extends Component {
         </PanelColor>
 
         <PanelColor
-            title={ __( 'Separator Color', 'jsforwpblocks' ) }
+            title={ __( 'Separator Color', 'ttfb-blocks' ) }
                 value={ this.props.attributes.blockHrColor }
             colorValue={ blockHrColor }
         >

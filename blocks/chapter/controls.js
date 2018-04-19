@@ -7,6 +7,7 @@ const {
     AlignmentToolbar,
     BlockControls,
     BlockAlignmentToolbar,
+    InspectorControls,
 } = wp.blocks;
 
 
@@ -19,12 +20,17 @@ export default class Inspector extends Component {
         super( ...arguments );
     }
     render() {
-        const { attributes: { blockAlignment, textAlignment }, setAttributes } = this.props;
+        const { attributes: { blockAlignment, mainContentAlignment, nodeName }, setAttributes } = this.props;
         return (
             <BlockControls>
                 <BlockAlignmentToolbar
                     value={ blockAlignment }
                     onChange={ blockAlignment => setAttributes( { blockAlignment } ) }
+                />
+
+                <AlignmentToolbar
+                    value={ mainContentAlignment }
+                    onChange={ mainContentAlignment => setAttributes( { mainContentAlignment } ) }
                 />
             </BlockControls>
         );

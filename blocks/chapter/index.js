@@ -11,11 +11,6 @@ import attributes from './attributes';
 import './style.scss';
 import './editor.scss';
 
-// For columns
-//import memoize from 'memize';
-//import { times } from 'lodash';
-
-
 /**
  * Internal block libraries
  */
@@ -26,23 +21,53 @@ const {
     registerBlockType,
     RichText,
     InnerBlocks,
+    MediaUpload,
+    Editable,
+  BlockControls,
 } = wp.blocks;
+const {
+    Button,
+} = wp.components;
 
-/*const getColumnLayouts = memoize( ( blockLayout ) => {
-	return times( blockLayout, ( n ) => ( {
-		name: `column-${ n + 1 }`,
-		label: sprintf( __( 'Column %d' ), n + 1 ),
-		icon: 'columns',
-	} ) );
-} );
-*/
+function getLayoutClass( blockLayout ) {
+    let blockLayoutClass = [];
+    
+    if( blockLayout == 'both' ) {
+        blockLayoutClass.push('md-col-6');
+    }else{
+        blockLayoutClass.push('col-12');
+    }
+
+    return blockLayoutClass;
+}
+
+function isImageDisplay( blockLayout ) {
+    let image = true;
+
+    if( blockLayout == 'text' ) {
+        image = false;
+    }
+
+    return image;
+}
+
+function isTextDisplay( blockLayout ) {
+    let text = true;
+
+    if( blockLayout == 'image' ) {
+        text = false;
+    }
+    
+    return text;
+}
+
 /**
  * Register block
  */
 export default registerBlockType(
-    'ttfb/chapter',
+    'ttfb-blocks/chapter',
     {
-        title: __( 'Chapter' ),
+        title: __( 'TTFB Chapter' ),
         category: 'common',
         icon: icons.chapter,
         keywords: [
@@ -59,8 +84,23 @@ export default registerBlockType(
 
         edit: props => {
 
-            const { attributes: { blockAlignment, supTitle, mainTitle, blockBackgroundColor, blockTextColor, blockHrColor, blockId, blockLayout }, attributes, isSelected, className, setAttributes } = props;
+            const { attributes: { blockAlignment, supTitle, mainTitle, blockBackgroundColor, blockTextColor, blockHrColor, blockId, blockLayout, mainContent, mainContentAlignment, blockImgURL, blockImgID, blockImgAlt }, attributes, isSelected, className, setAttributes } = props;
             //const classes = classnames( className, `has-${ blockLayout }-columns` );
+
+            const onSelectImage = img => {
+                setAttributes( {
+                    blockImgID: img.id,
+                    blockImgURL: img.url,
+                    blockImgAlt: img.alt,
+                } );
+            };
+            const onRemoveImage = () => {
+                setAttributes({
+                    blockImgID: null,
+                    blockImgURL: null,
+                    blockImgAlt: null,
+                });
+            }
 
             return [
                 isSelected && <Inspector { ...{ setAttributes, ...props} } />,
@@ -94,7 +134,6 @@ export default registerBlockType(
                                 'p0',
                                 'm0',
                                 'pb2',
-                                'mb3',
                             ) }
                         >
                             <span
@@ -127,18 +166,106 @@ export default registerBlockType(
                                 />
                             </span>
                         </h2>
-
+                        
                         <div
-                                className={ classnames(
-                                    'ttfb-block-columns',
-                                    'has-2-columns'
-                                ) }
-                            >
-                                <InnerBlocks layouts={ [
-                                    { name: 'column-1', label: 'Column 1', icon: 'columns' },
-                                    { name: 'column-2', label: 'Column 2', icon: 'columns' },
-                                ] } />
+                            className={ classnames(
+                                'md-flex',
+                                'items-stretch',
+                                'py2',
+                                'md-py3',
+                                'mxn2',
+                            ) }
+                        >
+
+                            {isTextDisplay( blockLayout ) == true &&
+                                <div
+                                    className={ classnames(
+                                        'px2',
+                                        'items-center',
+                                        'flex',
+                                        getLayoutClass( blockLayout )
+                                    ) }
+                                >
+                                    <div
+                                        style={ { textAlign: mainContentAlignment } }
+                                        className="main-content"
+                                    >
+                                        <RichText
+                                            tagName="div"
+                                            multiline="p"
+                                            placeholder={ __( 'Your content' ) }
+                                            onChange={ mainContent => setAttributes( { mainContent } ) }
+                                            value={ mainContent }
+                                            formattingControls={ ['bold', 'italic', 'strikethrough', 'link'] }
+                                        />
+                                    </div>
+                                </div>
+                            }
+
+                            
+                            {isImageDisplay( blockLayout ) == true &&
+                                <div
+                                    className={ classnames(
+                                        'flex',
+                                        'items-stretch',
+                                        'justify-center',
+                                        'items-center',
+                                        'px2',
+                                        getLayoutClass( blockLayout )
+                                    ) }
+                                >
+                                    
+                                    { ! blockImgID ? (
+                                        
+                                        <div class="imageSelector">
+                                            <div class="labelImage">
+                                                { icons.image } 
+                                                <span class="ml1">
+                                                    { __( 'Image', 'ttfb-blocks' ) }
+                                                </span>
+                                            </div>
+                                            <MediaUpload
+                                                onSelect={ onSelectImage }
+                                                type="image"
+                                                value={ blockImgID }
+                                                render={ ( { open } ) => (
+                                                    <Button
+                                                        className={ "button button-large" }
+                                                        onClick={ open }
+                                                    >
+                                                        { __( 'Add from Media Library', 'ttfb-blocks' ) }
+                                                    </Button>
+                                                ) }
+                                            >
+                                            </MediaUpload>
+                                        </div>
+                                    ) : (
+
+                                        <div class="imageWrapper">
+                                            <img
+                                                src={ blockImgURL }
+                                                alt={ blockImgAlt }
+                                            />
+
+                                            { isSelected ? (
+
+                                                <Button
+                                                    className="remove-image"
+                                                    onClick={ onRemoveImage }
+                                                >
+                                                    { icons.remove }
+                                                </Button>
+
+                                            ) : null }
+
+                                        </div>
+                                    )}
+                                </div>
+                            }
+                            
                         </div>
+
+                        
                             
                     </div>
                 </div>
@@ -147,9 +274,10 @@ export default registerBlockType(
 
         save: props => {
 
-            const { attributes: { blockAlignment, blockBackgroundColor, blockTextColor, supTitle, mainTitle, blockHrColor, blockId, blockLayout }, attributes } = props;
+            const { attributes: { blockAlignment, blockBackgroundColor, blockTextColor, supTitle, mainTitle, blockHrColor, blockId, blockLayout, mainContent, mainContentAlignment, blockImgURL, blockImgID, blockImgAlt, nodeName }, attributes } = props;
 
-            const Tag = 'h2';
+            //const Tag = 'h2';
+            const Tag = nodeName.toLowerCase();
 
             return (
                 <div
@@ -209,13 +337,56 @@ export default registerBlockType(
 
                         <div
                             className={ classnames(
-                                'ttfb-block-columns',
-                                'has-2-columns'
+                                'md-flex',
+                                'items-stretch',
+                                'py2',
+                                'md-py3',
+                                'mxn2',
                             ) }
                         >
+
+                            {isTextDisplay( blockLayout ) == true &&
+                                <div
+                                    className={ classnames(
+                                        'px2',
+                                        'items-center',
+                                        'flex',
+                                        getLayoutClass( blockLayout )
+                                    ) }
+                                >
+                                    <div 
+                                        className="main-content"
+                                        style={ { textAlign: mainContentAlignment } }
+                                    >
+                                        { mainContent }
+                                    </div>
+                                </div>
+                            }
+
                             
-                            <InnerBlocks.Content />
+                            {isImageDisplay( blockLayout ) == true &&
+                                <div
+                                    className={ classnames(
+                                        'flex',
+                                        'justify-center',
+                                        'items-center',
+                                        'px2',
+                                        getLayoutClass( blockLayout )
+                                    ) }
+                                >
+                                    
+                                    <img
+                                        src={ blockImgURL }
+                                        alt={ blockImgAlt }
+                                    />
+                                </div>
+                            }
+                            
                         </div>
+                                
+                            
+                                
+                            
                     </div>
                 </div>
             );

@@ -9,10 +9,13 @@ const attributes = {
         source: 'children',
         selector: '.main-title',
     },
-    intro: {
+    mainContent: {
         type: 'array',
         source: 'children',
-        selector: '.intro',
+        selector: '.main-content',
+    },
+    mainContentAlignment: {
+        type: 'string',
     },
     blockBackgroundColor: {
         type: 'string',
@@ -34,8 +37,30 @@ const attributes = {
         type: 'string',
     },
     blockLayout: {
+        type: 'string',
+		default: 'both',
+    },
+    blockImgURL: {
+        type: 'string',
+        source: 'attribute',
+        attribute: 'src',
+        selector: 'img',
+    },
+    blockImgID: {
         type: 'number',
-		default: 2,
+    },
+    blockImgAlt: {
+        type: 'string',
+        source: 'attribute',
+        attribute: 'alt',
+        selector: 'img',
+    },
+    nodeName: {
+        type: 'string',
+        source: 'property',
+        selector: 'h1,h2,h3,h4,h5,h6',
+        property: 'nodeName',
+        default: 'H2',
     },
 };
 
