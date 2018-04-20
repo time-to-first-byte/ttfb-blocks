@@ -5,7 +5,7 @@ Tags: gutenberg, block
 License: GPLv2 or later
 Requires at least: 4.6
 Tested up to: 4.9
-Stable tag: 1.0.3
+Stable tag: 1.0.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -30,6 +30,8 @@ The TTFB Blocks provides extra Gutenberg blocks to TTFB themes. The plugin is no
 The TTFB Blocks plugin should work with other themes.
 
 ==Changelog==
+= v1.0.4 - April 19, 2018 =
+Fix Gutenberg 2.7 compatibility
 = v1.0.3 - April 19, 2018 =
 Fix Gutenberg 2.6 compatibility
 = v1.0.2 - February 26, 2018 =

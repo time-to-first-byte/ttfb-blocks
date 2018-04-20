@@ -147,8 +147,10 @@ export default registerBlockType(
                                 <RichText
                                     tagName="div"
                                     placeholder={ __( 'Your small title' ) }
+                                    keepPlaceholderOnFocus="true"
                                     onChange={ supTitle => setAttributes( { supTitle } ) }
                                     value={ supTitle }
+                                    formattingControls={[]}
                                 />
                             </span>
                             <span
@@ -161,8 +163,10 @@ export default registerBlockType(
                                 <RichText
                                     tagName="div"
                                     placeholder={ __( 'Your main title' ) }
+                                    keepPlaceholderOnFocus="true"
                                     onChange={ mainTitle => setAttributes( { mainTitle } ) }
                                     value={ mainTitle }
+                                    formattingControls={[]}
                                 />
                             </span>
                         </h2>
@@ -194,6 +198,7 @@ export default registerBlockType(
                                             tagName="div"
                                             multiline="p"
                                             placeholder={ __( 'Your content' ) }
+                                            keepPlaceholderOnFocus="true"
                                             onChange={ mainContent => setAttributes( { mainContent } ) }
                                             value={ mainContent }
                                             formattingControls={ ['bold', 'italic', 'strikethrough', 'link'] }
