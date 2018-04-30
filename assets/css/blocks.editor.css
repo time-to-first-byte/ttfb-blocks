@@ -1947,3 +1947,8 @@
 /**
  * Editor styles for the admin
  */
+.ttfb-blocks-accordion .editor-block-list__layout {
+  border: 3px dashed rgba(0, 0, 0, 0.0625);
+  border-top: 0;
+  border-bottom-right-radius: 3px;
+  border-bottom-left-radius: 3px; }

@@ -25,7 +25,8 @@ const {
 	RichText,
 	AlignmentToolbar,
 	BlockControls,
-	BlockAlignmentToolbar,
+    BlockAlignmentToolbar,
+    InnerBlocks,
 } = wp.blocks;
 
 // Register components
@@ -36,6 +37,15 @@ const {
 	Dashicon,
 } = wp.components;
 
+function isAccordionOpen( accordionOpen ) {
+
+    if( accordionOpen == true ) {
+        return true;
+    }else{
+        return false;
+    }
+     
+}
 
 /**
  * Register block
@@ -82,26 +92,22 @@ export default registerBlockType(
                             'bg-darken-1',
                             'py1',
                             'px2',
+                            'rounded',
                         ) }
                         onChange={ accordionTitle => setAttributes( { accordionTitle } ) }
                         formattingControls={[]}
                     />
 
-                    <RichText
-                        tagName="div"
-                        multiline="p"
-                        placeholder={ __( 'Accordion Text' ) }
-                        value={ accordionText }
-                        isSelected={ isSelected }
-                        keepPlaceholderOnFocus
-                        formattingControls={ [ 'bold', 'italic', 'strikethrough', 'link' ] }
+                    
+                    <InnerBlocks
                         className={ classnames(
                             'ttfb-accordion-text',
                             'p2',
                             'child-mt0',
                             'child-mb0',
+                            'border',
+                            'border-gray',
                         ) }
-                        onChange={ accordionText => setAttributes( { accordionText } ) }
                     />
                 </div>
             ];
@@ -110,6 +116,13 @@ export default registerBlockType(
         save: props => {
 
             const { attributes: { accordionTitle, accordionText, accordionAlignment, accordionTextAlignment, accordionFontSize, accordionOpen }, attributes } = props;
+            
+
+            if( isAccordionOpen( accordionOpen ) ){
+                const open = true;
+            }else{
+                const open = false;
+            }
 
             return (
                 <div
@@ -121,9 +134,11 @@ export default registerBlockType(
                         'ttfb-font-size-' + accordionFontSize,
                     ) }
                 >
-                    <details open={accordionOpen}>
+                    <details open={ accordionOpen }>
                         <summary class="ttfb-accordion-title bold bg-darken-1 py1 px2 cursor-pointer"><span class="ml1">{ accordionTitle }</span></summary>
-                        <div class="ttfb-accordion-text p2 child-mt0 child-mb0">{ accordionText }</div>
+                        <div class="ttfb-accordion-text p2 child-mt0 child-mb0">
+                            <InnerBlocks.Content />
+                        </div>
                     </details>
                 </div>
             );
