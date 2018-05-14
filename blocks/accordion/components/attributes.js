@@ -9,9 +9,7 @@ const attributes = {
     },
     accordionAlignment: {
         type: 'string',
-    },
-    accordionTextAlignment: {
-        type: 'string',
+        default: ""
     },
     accordionFontSize: {
         type: 'number',

@@ -20,12 +20,12 @@ export default class Inspector extends Component {
         super( ...arguments );
     }
     render() {
-        const { attributes: { accordionAlignment, accordionTextAlignment }, setAttributes } = this.props;
+        const { attributes: { blockAlignement }, setAttributes } = this.props;
         return (
             <BlockControls>
                 <BlockAlignmentToolbar
-                    value={ accordionAlignment }
-                    onChange={ accordionAlignment => setAttributes( { accordionAlignment } ) }
+                    value={ blockAlignement }
+                    onChange={ blockAlignement => setAttributes( { blockAlignement } ) }
                 />
             </BlockControls>
         );

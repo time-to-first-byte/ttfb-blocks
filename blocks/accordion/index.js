@@ -37,16 +37,6 @@ const {
 	Dashicon,
 } = wp.components;
 
-function isAccordionOpen( accordionOpen ) {
-
-    if( accordionOpen == true ) {
-        return true;
-    }else{
-        return false;
-    }
-     
-}
-
 /**
  * Register block
  */
@@ -62,24 +52,22 @@ export default registerBlockType(
         attributes,
         getEditWrapperProps( attributes ) {
             const { accordionAlignment } = attributes;
-            if ( 'left' === accordionAlignment || 'right' === accordionAlignment || 'full' === accordionAlignment ) {
+            if ( 'left' === accordionAlignment || 'right' === accordionAlignment || 'full' === accordionAlignment || 'wide' === accordionAlignment ) {
                 return { 'data-align': accordionAlignment };
             }
         },
 
         edit: props => {
 
-            const { attributes: { accordionTitle, accordionText, accordionAlignment, accordionTextAlignment, accordionFontSize, accordionOpen }, attributes, isSelected, className, setAttributes } = props;
+            const { attributes: { accordionTitle, accordionAlignment, accordionOpen }, attributes, isSelected, className, setAttributes } = props;
 
             return [
                 isSelected && <Inspector { ...{ setAttributes, ...props} } />,
                 isSelected && <Controls { ...{ setAttributes, ...props } }/>,
                 <div
-                    style={ { textAlign: accordionTextAlignment } }
                     className={ classnames(
                         'ttfb-blocks-accordion',
                         'ttfb-block-accordion',
-                        'ttfb-font-size-' + accordionFontSize,
                     ) }
                 >
                     <RichText
@@ -115,23 +103,14 @@ export default registerBlockType(
 
         save: props => {
 
-            const { attributes: { accordionTitle, accordionText, accordionAlignment, accordionTextAlignment, accordionFontSize, accordionOpen }, attributes } = props;
-            
-
-            if( isAccordionOpen( accordionOpen ) ){
-                const open = true;
-            }else{
-                const open = false;
-            }
+            const { attributes: { accordionTitle, accordionAlignment, accordionOpen }, attributes } = props;
 
             return (
                 <div
                     className={ classnames(
                         'ttfb-blocks-accordion',
                         'align'+accordionAlignment,
-                        'align-'+accordionTextAlignment,
                         'ttfb-block-accordion',
-                        'ttfb-font-size-' + accordionFontSize,
                     ) }
                 >
                     <details open={ accordionOpen }>

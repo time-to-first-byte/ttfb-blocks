@@ -1952,3 +1952,16 @@
   border-top: 0;
   border-bottom-right-radius: 3px;
   border-bottom-left-radius: 3px; }
+
+.ttfb-blocks-accordion {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important; }
+/**
+ * Editor styles for the admin
+ */
+.ttfb-block-section h1, .ttfb-block-section h2, .ttfb-block-section h3, .ttfb-block-section h4 {
+  color: inherit; }
+
+.ttfb-block-section .ttfb-blocks-accordion {
+  margin-top: 0;
+  margin-bottom: 0; }

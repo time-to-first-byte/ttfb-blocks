@@ -1,0 +1,58 @@
+/**
+ * Spacer styles
+ * Loads on front end and back end
+ */
+ .ttfb-block-spacer {
+	margin: 0;
+	position: relative;
+
+	hr {
+		border: none;
+        margin: 0;
+        
+        &:before{ display: none; }
+	}
+
+	&.ttfb-block-spacer-divider:after {
+		content: " ";
+		width: 100%;
+		height: 1px;
+		border-top: solid 1px;
+		position: absolute;
+		top: 50%;
+    }
+    
+    
+
+	&.ttfb-block-divider-solid.ttfb-block-spacer-divider:after {
+		border-top-style: solid;
+	}
+
+	&.ttfb-block-divider-dotted.ttfb-block-spacer-divider:after {
+		border-top-style: dotted;
+	}
+
+	&.ttfb-block-divider-dashed.ttfb-block-spacer-divider:after {
+		border-top-style: dashed;
+	}
+
+	&.ttfb-block-divider-size-1.ttfb-block-spacer-divider:after {
+		border-top-width: 1px;
+	}
+
+	&.ttfb-block-divider-size-2.ttfb-block-spacer-divider:after {
+		border-top-width: 2px;
+	}
+
+	&.ttfb-block-divider-size-3.ttfb-block-spacer-divider:after {
+		border-top-width: 3px;
+	}
+
+	&.ttfb-block-divider-size-4.ttfb-block-spacer-divider:after {
+		border-top-width: 4px;
+	}
+
+	&.ttfb-block-divider-size-5.ttfb-block-spacer-divider:after {
+		border-top-width: 5px;
+	}
+}

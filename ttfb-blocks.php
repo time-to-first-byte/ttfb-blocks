@@ -24,8 +24,8 @@ include( plugin_dir_path( __FILE__ ) . 'lib/enqueue-scripts.php');
 // Block Templates
 //include( plugin_dir_path( __FILE__ ) . 'lib/block-templates.php');
 
-// Dynamic Blocks
-//include( plugin_dir_path( __FILE__ ) . 'blocks/12-dynamic/index.php');
+// Section block
+//include( plugin_dir_path( __FILE__ ) . 'blocks/section/index.php');
 
 
 /**
@@ -85,7 +85,7 @@ function ttfb_blocks_critical_css() {
 /*
 * Chapter Block Critical CSS
 */
-add_action('ttfb_blocks_inline_styles','ttfb_blocks_pillar_critical_styles', 10);
+//add_action('ttfb_blocks_inline_styles','ttfb_blocks_pillar_critical_styles', 10);
 function ttfb_blocks_pillar_critical_styles(){
     if( !ttfb_blocks_is_autoptimize_active() ||
         ( !is_single() && !is_page() ) ){
