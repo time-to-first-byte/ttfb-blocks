@@ -6,12 +6,13 @@
 const { __ } = wp.i18n;
 const { Component } = wp.element;
 
-// Import block components
+
+
 const {
-  InspectorControls,
-  BlockDescription,
-  ColorPalette,
-} = wp.blocks;
+    InspectorControls,
+    BlockDescription,
+    ColorPalette,
+} = wp.editor;
 
 // Import Inspector components
 const {

@@ -5,14 +5,11 @@ const { __ } = wp.i18n;
 const { Component } = wp.element;
 const {
     AlignmentToolbar,
-    
-} = wp.blocks;
-
-const {
+    BlockControls,
     BlockAlignmentToolbar,
     InspectorControls,
-    BlockControls,
-} = wp.editor;
+} = wp.blocks;
+
 
 /**
  * Create a Block Controls wrapper Component
@@ -23,12 +20,12 @@ export default class Inspector extends Component {
         super( ...arguments );
     }
     render() {
-        const { attributes: { accordionAlignment, accordionTextAlignment }, setAttributes } = this.props;
+        const { attributes: { alertAlignment, alertTextAlignment }, setAttributes } = this.props;
         return (
             <BlockControls>
                 <BlockAlignmentToolbar
-                    value={ accordionAlignment }
-                    onChange={ accordionAlignment => setAttributes( { accordionAlignment } ) }
+                    value={ alertAlignment }
+                    onChange={ alertAlignment => setAttributes( { alertAlignment } ) }
                 />
             </BlockControls>
         );

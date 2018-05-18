@@ -1,5 +1,5 @@
 /**
- * BLOCK: Atomic Blocks Accordion Block
+ * BLOCK: Atomic Blocks alert Block
  */
 
 // Import block dependencies and components
@@ -22,15 +22,12 @@ const { Component } = wp.element;
 // Register block controls
 const {
 	registerBlockType,
+	RichText,
+	AlignmentToolbar,
 	BlockControls,
-} = wp.blocks;
-
-const {
-    RichText,
-    AlignmentToolbar,
-    InnerBlocks,
     BlockAlignmentToolbar,
-} = wp.editor;
+    InnerBlocks,
+} = wp.blocks;
 
 // Register components
 const {
@@ -44,55 +41,57 @@ const {
  * Register block
  */
 export default registerBlockType(
-    'ttfb-blocks/accordion',
+    'ttfb-blocks/alerts',
     {
-        title: __( 'TTFB Accordion' ),
+        title: __( 'TTFB Alerts' ),
         category: 'common',
         icon: 'editor-ul',
         keywords: [
-            __( 'Accordion' ),
+            __( 'Alerts' ),
         ],
         attributes,
         getEditWrapperProps( attributes ) {
-            const { accordionAlignment } = attributes;
-            if ( 'left' === accordionAlignment || 'right' === accordionAlignment || 'full' === accordionAlignment || 'wide' === accordionAlignment ) {
-                return { 'data-align': accordionAlignment };
+            const { alertAlignment } = attributes;
+            if ( 'left' === alertAlignment || 'right' === alertAlignment || 'full' === alertAlignment || 'wide' === alertAlignment ) {
+                return { 'data-align': alertAlignment };
             }
         },
 
         edit: props => {
 
-            const { attributes: { accordionTitle, accordionAlignment, accordionOpen }, attributes, isSelected, className, setAttributes } = props;
+            const { attributes: { alertTitle, alertAlignment, alertOpen }, attributes, isSelected, className, setAttributes, selectedOption } = props;
+            
 
             return [
                 isSelected && <Inspector { ...{ setAttributes, ...props} } />,
                 isSelected && <Controls { ...{ setAttributes, ...props } }/>,
                 <div
                     className={ classnames(
-                        'ttfb-blocks-accordion',
-                        'ttfb-block-accordion',
+                        'ttfb-blocks-alert',
+                        'ttfb-block-alert',
                     ) }
                 >
                     <RichText
                         tagName="p"
-                        placeholder={ __( 'Accordion Title' ) }
-                        value={ accordionTitle }
+                        placeholder={ __( 'alert Title' ) }
+                        value={ alertTitle }
                         className={ classnames(
-                            'ttfb-accordion-title',
+                            'ttfb-alert-title',
                             'bold',
                             'bg-darken-1',
                             'py1',
                             'px2',
                             'rounded',
                         ) }
-                        onChange={ accordionTitle => setAttributes( { accordionTitle } ) }
+                        onChange={ alertTitle => setAttributes( { alertTitle } ) }
                         formattingControls={[]}
                     />
-
+                    
+                    
                     
                     <InnerBlocks
                         className={ classnames(
-                            'ttfb-accordion-text',
+                            'ttfb-alert-text',
                             'p2',
                             'child-mt0',
                             'child-mb0',
@@ -106,19 +105,19 @@ export default registerBlockType(
 
         save: props => {
 
-            const { attributes: { accordionTitle, accordionAlignment, accordionOpen }, attributes } = props;
+            const { attributes: { alertTitle, alertAlignment, alertOpen, selectedOption }, attributes } = props;
 
             return (
                 <div
                     className={ classnames(
-                        'ttfb-blocks-accordion',
-                        'align'+accordionAlignment,
-                        'ttfb-block-accordion',
+                        'ttfb-blocks-alert',
+                        'align'+alertAlignment,
+                        'ttfb-block-alert',
                     ) }
                 >
-                    <details open={ accordionOpen }>
-                        <summary class="ttfb-accordion-title bold bg-darken-1 py1 px2 cursor-pointer"><span class="ml1">{ accordionTitle }</span></summary>
-                        <div class="ttfb-accordion-text p2 child-mt0 child-mb0">
+                    <details open={ alertOpen }>
+                        <summary class="ttfb-alert-title bold bg-darken-1 py1 px2 cursor-pointer"><span class="ml1">{ alertTitle }</span></summary>
+                        <div class="ttfb-alert-text p2 child-mt0 child-mb0">
                             <InnerBlocks.Content />
                         </div>
                     </details>

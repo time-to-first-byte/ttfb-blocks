@@ -7,3 +7,5 @@ import './chapter';
 import './accordion';
 //import './spacer';
 import './section';
+import './alerts';
+

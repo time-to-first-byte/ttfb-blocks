@@ -40,6 +40,10 @@ module.exports = {
     path: path.resolve( __dirname ),
     filename: '[name].js',
   },
+  externals: {
+    'react': 'React',
+    'react-dom': 'ReactDOM',
+  },
   watch: true,
   devtool: 'cheap-eval-source-map',
   module: {

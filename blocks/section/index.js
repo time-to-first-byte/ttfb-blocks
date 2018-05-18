@@ -24,13 +24,16 @@ const { Component } = wp.element;
 // Register block controls
 const {
 	registerBlockType,
-	RichText,
-	AlignmentToolbar,
-	BlockControls,
-    BlockAlignmentToolbar,
-    InnerBlocks,
     getColorClass,
 } = wp.blocks;
+
+const {
+	RichText,
+    InnerBlocks,
+    BlockAlignmentToolbar,
+    AlignmentToolbar,
+    BlockControls,
+} = wp.editor;
 
 // Register components
 const {
