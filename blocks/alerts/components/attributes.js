@@ -1,27 +1,14 @@
 const attributes = {
-    alertTitle: {
-        type: 'string',
-    },
-    alertText: {
-        type: 'array',
-        selector: '.ttfb-alert-text',
-        source: 'children',
-    },
     alertAlignment: {
         type: 'string',
         default: ""
     },
-    selectedOption: {
+    alertBackgroundColor: {
         type: 'string',
-        default: "One"
+        default: 'rgba(0, 0, 0, .0625)',
     },
-    alertFontSize: {
-        type: 'number',
-        default: 18
-    },
-    alertOpen: {
-        type: 'boolean',
-        default: false
+    alertTextColor: {
+        type: 'string',
     },
 };
 

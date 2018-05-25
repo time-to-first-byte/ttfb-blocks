@@ -37,13 +37,25 @@ export default class Inspector extends Component {
 	render() {
 
 		// Setup the attributes
-        const { attributes: { blockBackgroundColor, blockTextColor, blockVerticalMargin, blockVerticalPadding, blockHorizontalPadding }, setAttributes } = this.props;
+        const { attributes: { blockBackgroundColor, blockTextColor, blockVerticalMargin, blockVerticalPadding }, setAttributes } = this.props;
+
+        /*const {
+            attributes,
+            setAttributes,
+            blockBackgroundColor, 
+            blockTextColor, 
+            blockVerticalMargin, 
+            blockVerticalPadding, 
+            blockHorizontalPadding
+        } = this.props;*/
 
 		return (
 		<InspectorControls key="inspector">
+            
 			<PanelColor
                 title={ __( 'Background color', 'ttfb-blocks' ) }
                 colorValue={ blockBackgroundColor }
+                initialOpen={ false }
             >
                 <ColorPalette
                     value={ blockBackgroundColor }
@@ -54,6 +66,7 @@ export default class Inspector extends Component {
             <PanelColor
                 title={ __( 'Text color', 'ttfb-blocks' ) }
                 colorValue={ blockTextColor }
+                initialOpen={ false }
             >
                 <ColorPalette
                     value={ blockTextColor }
@@ -76,16 +89,6 @@ export default class Inspector extends Component {
                     label={ __( 'Vertical Padding', 'ttfb-blocks' ) }
                     value={ blockVerticalPadding }
                     onChange={ blockVerticalPadding => setAttributes( { blockVerticalPadding } ) }
-                    min={ 1 }
-                    max={ 4 }
-                />
-            </PanelBody>
-
-            <PanelBody>
-                <RangeControl
-                    label={ __( 'Horizontal Padding', 'ttfb-blocks' ) }
-                    value={ blockHorizontalPadding }
-                    onChange={ blockHorizontalPadding => setAttributes( { blockHorizontalPadding } ) }
                     min={ 1 }
                     max={ 4 }
                 />

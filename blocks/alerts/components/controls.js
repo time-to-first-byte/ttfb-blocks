@@ -20,7 +20,7 @@ export default class Inspector extends Component {
         super( ...arguments );
     }
     render() {
-        const { attributes: { alertAlignment, alertTextAlignment }, setAttributes } = this.props;
+        const { attributes: { alertAlignment }, setAttributes } = this.props;
         return (
             <BlockControls>
                 <BlockAlignmentToolbar

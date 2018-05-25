@@ -22,11 +22,6 @@ const { Component } = wp.element;
 // Register block controls
 const {
 	registerBlockType,
-	RichText,
-	AlignmentToolbar,
-	BlockControls,
-    BlockAlignmentToolbar,
-    InnerBlocks,
 } = wp.blocks;
 
 // Register components
@@ -37,6 +32,14 @@ const {
 	Dashicon,
 } = wp.components;
 
+const {
+	RichText,
+    InnerBlocks,
+    BlockAlignmentToolbar,
+    AlignmentToolbar,
+    BlockControls,
+} = wp.editor;
+
 /**
  * Register block
  */
@@ -45,7 +48,7 @@ export default registerBlockType(
     {
         title: __( 'TTFB Alerts' ),
         category: 'common',
-        icon: 'editor-ul',
+        icon: icons.dismiss,
         keywords: [
             __( 'Alerts' ),
         ],
@@ -59,36 +62,17 @@ export default registerBlockType(
 
         edit: props => {
 
-            const { attributes: { alertTitle, alertAlignment, alertOpen }, attributes, isSelected, className, setAttributes, selectedOption } = props;
+            const { attributes: { alertBackgroundColor, alertTextColor }, attributes, isSelected, className, setAttributes } = props;
             
 
             return [
                 isSelected && <Inspector { ...{ setAttributes, ...props} } />,
-                isSelected && <Controls { ...{ setAttributes, ...props } }/>,
                 <div
                     className={ classnames(
                         'ttfb-blocks-alert',
-                        'ttfb-block-alert',
                     ) }
                 >
-                    <RichText
-                        tagName="p"
-                        placeholder={ __( 'alert Title' ) }
-                        value={ alertTitle }
-                        className={ classnames(
-                            'ttfb-alert-title',
-                            'bold',
-                            'bg-darken-1',
-                            'py1',
-                            'px2',
-                            'rounded',
-                        ) }
-                        onChange={ alertTitle => setAttributes( { alertTitle } ) }
-                        formattingControls={[]}
-                    />
-                    
-                    
-                    
+
                     <InnerBlocks
                         className={ classnames(
                             'ttfb-alert-text',
@@ -105,22 +89,15 @@ export default registerBlockType(
 
         save: props => {
 
-            const { attributes: { alertTitle, alertAlignment, alertOpen, selectedOption }, attributes } = props;
+            const { attributes: { alertBackgroundColor, alertTextColor }, attributes } = props;
 
             return (
                 <div
                     className={ classnames(
                         'ttfb-blocks-alert',
-                        'align'+alertAlignment,
-                        'ttfb-block-alert',
                     ) }
                 >
-                    <details open={ alertOpen }>
-                        <summary class="ttfb-alert-title bold bg-darken-1 py1 px2 cursor-pointer"><span class="ml1">{ alertTitle }</span></summary>
-                        <div class="ttfb-alert-text p2 child-mt0 child-mb0">
-                            <InnerBlocks.Content />
-                        </div>
-                    </details>
+                    <InnerBlocks.Content />
                 </div>
             );
         },

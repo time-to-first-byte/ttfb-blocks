@@ -3,14 +3,8 @@ const attributes = {
         type: 'string',
         default: 'rgba(0, 0, 0, .0625)',
     },
-    blockCustomBackgroundColor: {
-        type: 'string',
-    },
     blockTextColor: {
         type: 'string',
-    },
-    blockCustomTextColor: {
-        type: 'string'
     },
     blockAlignement: {
         type: 'string',
@@ -20,10 +14,6 @@ const attributes = {
         default: 3
     },
     blockVerticalMargin: {
-        type: 'number',
-        default: 2
-    },
-    blockHorizontalPadding: {
         type: 'number',
         default: 2
     },

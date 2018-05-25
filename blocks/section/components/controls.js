@@ -4,11 +4,9 @@
 const { __ } = wp.i18n;
 const { Component } = wp.element;
 const {
-    AlignmentToolbar,
     BlockControls,
     BlockAlignmentToolbar,
-    InspectorControls,
-} = wp.blocks;
+} = wp.editor;
 
 
 /**

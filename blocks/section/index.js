@@ -24,10 +24,11 @@ const { Component } = wp.element;
 // Register block controls
 const {
 	registerBlockType,
-    getColorClass,
 } = wp.blocks;
 
 const {
+    getColorClass,
+	withColors,
 	RichText,
     InnerBlocks,
     BlockAlignmentToolbar,
@@ -71,10 +72,13 @@ export default registerBlockType(
                 return { 'data-align': blockAlignement };
             }
         },
+        
 
         edit: props => {
 
-            const { attributes: { blockBackgroundColor, blockCustomBackgroundColor, blockTextColor, blockCustomTextColor, blockVerticalMargin, blockVerticalPadding, blockHorizontalPadding, blockAlignement }, attributes, isSelected, className, setAttributes } = props;
+            
+
+            const { attributes: { blockBackgroundColor, blockTextColor, blockVerticalMargin, blockVerticalPadding, blockAlignement }, attributes, isSelected, className, setAttributes } = props;
 
             return [
                 isSelected && <Inspector { ...{ setAttributes, ...props} } />,
@@ -87,7 +91,6 @@ export default registerBlockType(
                     className={ classnames(
                         'ttfb-blocks-section',
                         'ttfb-block-section',
-                        'px'+blockHorizontalPadding,
                         'py'+blockVerticalPadding,
                         'align'+blockAlignement,
                         'mt'+blockVerticalMargin,
@@ -109,32 +112,29 @@ export default registerBlockType(
 
         save: props => {
 
-            const { attributes: { blockBackgroundColor, blockCustomBackgroundColor, blockTextColor, blockCustomTextColor, blockVerticalMargin, blockVerticalPadding, blockHorizontalPadding, blockAlignement }, attributes, isSelected, className, setAttributes } = props;
-            
+            const { attributes: { blockBackgroundColor, blockTextColor, blockVerticalMargin, blockVerticalPadding, blockAlignement }, attributes, isSelected, className, setAttributes } = props;
+
+
             //const textClass = getColorClass( 'color', blockTextColor );
             const textClass = "";
-            //const backgroundClass = getColorClass( 'background-color', blockBackgroundColor );
-            const backgroundClass = "";
+            const backgroundClass = getColorClass( 'background-color', blockBackgroundColor );
+            //const backgroundClass = "";
             const blockClasses = classnames( 
                 'ttfb-blocks-section',
                 'ttfb-block-section',
                 'clearfix',
-                'px'+blockHorizontalPadding,
                 'py'+blockVerticalPadding,
                 'align'+blockAlignement,
                 'mt'+blockVerticalMargin,
                 'mb'+blockVerticalMargin,
-                /*{
-                    'has-text-color': blockTextColor || blockCustomTextColor,
-                    [ textClass ]: textClass,
-                    'has-background': blockBackgroundColor || blockCustomBackgroundColor,
-                    [ backgroundClass ]: backgroundClass,
-                } */
+                backgroundClass,
             );
 
             const blockStyle = {
-                backgroundColor: backgroundClass ? undefined : blockCustomBackgroundColor,
-                color: textClass ? undefined : blockCustomTextColor,
+                //backgroundColor: backgroundClass ? undefined : blockCustomBackgroundColor,
+                //color: textClass ? undefined : blockCustomTextColor,
+                backgroundColor: blockBackgroundColor,
+                color: blockTextColor,
             };
         
             return (

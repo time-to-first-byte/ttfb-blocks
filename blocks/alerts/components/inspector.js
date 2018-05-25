@@ -12,10 +12,10 @@ import Select from 'react-select';
 
 // Import block components
 const {
-  InspectorControls,
-  BlockDescription,
-  ColorPalette,
-} = wp.blocks;
+    InspectorControls,
+    BlockDescription,
+    ColorPalette,
+} = wp.editor;
 
 // Import Inspector components
 const {
@@ -36,53 +36,41 @@ export default class Inspector extends Component {
 	constructor( props ) {
 		super( ...arguments );
     }
-    
-    
-    
-
-     
 
 	render() {
 
 		// Setup the attributes
-        const { attributes: { alertTitle, alertText, alertFontSize, alertOpen, selectedOption }, setAttributes } = this.props;
-  
-        const optionRenderer = (selectedOption) => {
-            //setState({ selectedOption });
-            var value = selectedOption.value
-            //this.setState({ selectedOption });
-            this.setState({
-                selectValue: selectedOption,
-            });
-            console.log(`Selected: ${selectedOption.label}`);
-            //return selectedOption.value;
-        };
+        const { attributes: { alertBackgroundColor, alertTextColor }, setAttributes } = this.props;
 
-
-        
 
 		return (
-		<InspectorControls key="inspector">
-			<PanelBody>
-				<ToggleControl
-					label={ __( 'Open by default' ) }
-					checked={ alertOpen }
-                    onChange={ alertOpen => setAttributes( { alertOpen } ) }
-				/>
+            <InspectorControls key="inspector">
+                <PanelBody>
+                    <PanelColor
+                    title={ __( 'Background color', 'ttfb-blocks' ) }
+                    colorValue={ alertBackgroundColor }
+                    initialOpen={ false }
+                >
+                    <ColorPalette
+                        value={ alertBackgroundColor }
+                        onChange={ alertBackgroundColor => setAttributes( { alertBackgroundColor } ) }
+                    />
+                </PanelColor>
 
-                <Select
-                    name="form-field-name"
-                    value={selectedOption}
-                    onChange={ selectedOption => setAttributes( { selectedOption } ) }
-                    options={[
-                        { value: 'fab fa-wordpress', label: '<i class="fab fa-wordpress"></i> fab fa-wordpress' },
-                        { value: 'fas fa-home', label: '<i class="fas fa-home"></i> fas fa-home' },
-                    ]}
-                />
+                <PanelColor
+                    title={ __( 'Text color', 'ttfb-blocks' ) }
+                    colorValue={ alertTextColor }
+                    initialOpen={ false }
+                >
+                    <ColorPalette
+                        value={ alertTextColor }
+                        onChange={ blockTextColor => setAttributes( { alertTextColor } ) }
+                    />
+                </PanelColor>
 
-                
-			</PanelBody>
-		</InspectorControls>
+                    
+                </PanelBody>
+            </InspectorControls>
 		);
 	}
 }
