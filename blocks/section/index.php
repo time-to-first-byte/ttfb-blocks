@@ -5,12 +5,13 @@
  */
 function ttfb_blocks_section_block_render( $attributes ) {
 
+    
     $markup = "<pre>";
-
     foreach( $attributes as $attribute ){
-        $markup .= $attribute;
+        $markup .= $attribute . "<br>";
     }
-
+    $post_id_array = json_decode( $attributes['blockContent'] );
+    $markup .= $post_id_array;
     $markup .= "</pre>";
 
     return $markup;
@@ -28,18 +29,3 @@ function ttfb_blocks_section_block_register() {
 if ( function_exists( 'register_block_type' ) ) {
     add_action( 'init', 'ttfb_blocks_section_block_register' );
 }
-
-function get_block_attributes( $block ) {
-    global $wp_query;
-    if( substr( $block , -1) != '/' ) $block .= '/';
-  
-    $attributes = array_filter($wp_query->query_vars, function ($k) use ($block) {
-      return $k == strstr($k, $block);
-    }, ARRAY_FILTER_USE_KEY);
-  
-    $return = [];
-    foreach ($attributes as $key => $value) {
-      $return[str_replace( $block, '', $key )] .= $value;
-    }
-    return $return;
-  }

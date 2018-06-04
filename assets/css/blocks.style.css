@@ -22,10 +22,10 @@
  * Accordion styles
  * Loads on front end and back end
  */
-.ttfb-blocks-accordion + .ttfb-block-accordion {
+.ttfb-block-accordion + .ttfb-block-accordion {
   margin-top: -2rem; }
 
-.ttfb-blocks-accordion {
+.ttfb-block-accordion {
   margin-top: 3rem;
   margin-bottom: 3rem; }
 /**
@@ -43,13 +43,3 @@
   margin-left: auto;
   margin-right: auto;
   max-width: calc(1200px - 3rem); }
-/**
- * Accordion styles
- * Loads on front end and back end
- */
-.ttfb-blocks-accordion + .ttfb-block-accordion {
-  margin-top: -2rem; }
-
-.ttfb-blocks-accordion {
-  margin-top: 3rem;
-  margin-bottom: 3rem; }

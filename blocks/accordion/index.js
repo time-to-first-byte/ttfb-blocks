@@ -48,51 +48,50 @@ export default registerBlockType(
     {
         title: __( 'TTFB Accordion' ),
         category: 'common',
-        icon: 'editor-ul',
+        icon: 'arrow-right',
         keywords: [
             __( 'Accordion' ),
         ],
         attributes,
         getEditWrapperProps( attributes ) {
-            const { accordionAlignment } = attributes;
-            if ( 'left' === accordionAlignment || 'right' === accordionAlignment || 'full' === accordionAlignment || 'wide' === accordionAlignment ) {
-                return { 'data-align': accordionAlignment };
+            const { alignment } = attributes;
+            if ( 'left' === alignment || 'right' === alignment || 'full' === alignment || 'wide' === alignment ) {
+                return { 'data-align': alignment };
             }
         },
 
         edit: props => {
 
-            const { attributes: { accordionTitle, accordionAlignment, accordionOpen }, attributes, isSelected, className, setAttributes } = props;
+            const { attributes: { title, alignment, open }, attributes, isSelected, className, setAttributes } = props;
 
             return [
                 isSelected && <Inspector { ...{ setAttributes, ...props} } />,
                 isSelected && <Controls { ...{ setAttributes, ...props } }/>,
                 <div
                     className={ classnames(
-                        'ttfb-blocks-accordion',
                         'ttfb-block-accordion',
                     ) }
                 >
                     <RichText
                         tagName="p"
                         placeholder={ __( 'Accordion Title' ) }
-                        value={ accordionTitle }
+                        value={ title }
                         className={ classnames(
-                            'ttfb-accordion-title',
+                            'accordion-title',
                             'bold',
                             'bg-darken-1',
                             'py1',
                             'px2',
                             'rounded',
                         ) }
-                        onChange={ accordionTitle => setAttributes( { accordionTitle } ) }
+                        onChange={ title => setAttributes( { title } ) }
                         formattingControls={[]}
                     />
 
                     
                     <InnerBlocks
                         className={ classnames(
-                            'ttfb-accordion-text',
+                            'accordion-text',
                             'p2',
                             'child-mt0',
                             'child-mb0',
@@ -106,19 +105,18 @@ export default registerBlockType(
 
         save: props => {
 
-            const { attributes: { accordionTitle, accordionAlignment, accordionOpen }, attributes } = props;
+            const { attributes: { title, alignment, open }, attributes } = props;
 
             return (
                 <div
                     className={ classnames(
-                        'ttfb-blocks-accordion',
-                        'align'+accordionAlignment,
+                        'align'+alignment,
                         'ttfb-block-accordion',
                     ) }
                 >
-                    <details open={ accordionOpen }>
-                        <summary class="ttfb-accordion-title bold bg-darken-1 py1 px2 cursor-pointer"><span class="ml1">{ accordionTitle }</span></summary>
-                        <div class="ttfb-accordion-text p2 child-mt0 child-mb0">
+                    <details open={ open }>
+                        <summary class="accordion-title bold bg-darken-1 py1 px2 cursor-pointer rounded"><span class="ml1">{ title }</span></summary>
+                        <div class="accordion-text p2 child-mt0 child-mb0">
                             <InnerBlocks.Content />
                         </div>
                     </details>

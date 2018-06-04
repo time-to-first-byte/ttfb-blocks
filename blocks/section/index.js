@@ -43,15 +43,7 @@ const {
 	IconButton,
 	Dashicon,
 } = wp.components;
-/*
-const colorsMigration = ( attributes ) => {
-	return omit( {
-		...attributes,
-		blockCustomTextColor: attributes.textColor && '#' === attributes.textColor[ 0 ] ? attributes.textColor : undefined,
-		blockCustomBackgroundColor: attributes.color && '#' === attributes.color[ 0 ] ? attributes.color : undefined,
-	}, [ 'color', 'textColor' ] );
-};
-*/
+
 /**
  * Register block
  */
@@ -67,34 +59,31 @@ export default registerBlockType(
         ],
         attributes,
         getEditWrapperProps( attributes ) {
-            const { blockAlignement } = attributes;
-            if ( 'left' === blockAlignement || 'right' === blockAlignement || 'full' === blockAlignement || 'wide' === blockAlignement ) {
-                return { 'data-align': blockAlignement };
+            const { alignement } = attributes;
+            if ( 'left' === alignement || 'right' === alignement || 'full' === alignement || 'wide' === alignement ) {
+                return { 'data-align': alignement };
             }
         },
         
-
         edit: props => {
 
-            
-
-            const { attributes: { blockBackgroundColor, blockTextColor, blockVerticalMargin, blockVerticalPadding, blockAlignement }, attributes, isSelected, className, setAttributes } = props;
-
+            const { attributes: { backgroundColor, textColor, verticalMargin, verticalPadding, horizontalPadding, alignement }, attributes, isSelected, className, setAttributes } = props;
+           
             return [
                 isSelected && <Inspector { ...{ setAttributes, ...props} } />,
                 isSelected && <Controls { ...{ setAttributes, ...props } }/>,
                 <div
                     style={ {
-                        backgroundColor: blockBackgroundColor,
-                        color: blockTextColor,
+                        backgroundColor: backgroundColor,
+                        color: textColor,
                     } }
                     className={ classnames(
-                        'ttfb-blocks-section',
-                        'ttfb-block-section',
-                        'py'+blockVerticalPadding,
-                        'align'+blockAlignement,
-                        'mt'+blockVerticalMargin,
-                        'mb'+blockVerticalMargin
+                        'ttfb-section',
+                        'py'+verticalPadding,
+                        'align'+alignement,
+                        'mt'+verticalMargin,
+                        'mb'+verticalMargin,
+                        'px'+horizontalPadding
                     ) }
                 >
                     <InnerBlocks
@@ -109,32 +98,32 @@ export default registerBlockType(
                 </div>
             ];
         },
-
+        
         save: props => {
 
-            const { attributes: { blockBackgroundColor, blockTextColor, blockVerticalMargin, blockVerticalPadding, blockAlignement }, attributes, isSelected, className, setAttributes } = props;
+            const { attributes: { backgroundColor, textColor, verticalMargin, verticalPadding, horizontalPadding, alignement }, attributes, isSelected, className, setAttributes } = props;
 
 
             //const textClass = getColorClass( 'color', blockTextColor );
             const textClass = "";
-            const backgroundClass = getColorClass( 'background-color', blockBackgroundColor );
+            const backgroundClass = getColorClass( 'background-color', backgroundColor );
             //const backgroundClass = "";
             const blockClasses = classnames( 
-                'ttfb-blocks-section',
-                'ttfb-block-section',
+                'ttfb-section',
                 'clearfix',
-                'py'+blockVerticalPadding,
-                'align'+blockAlignement,
-                'mt'+blockVerticalMargin,
-                'mb'+blockVerticalMargin,
+                'py'+verticalPadding,
+                'align'+alignement,
+                'mt'+verticalMargin,
+                'mb'+verticalMargin,
+                'px'+horizontalPadding,
                 backgroundClass,
             );
 
             const blockStyle = {
                 //backgroundColor: backgroundClass ? undefined : blockCustomBackgroundColor,
                 //color: textClass ? undefined : blockCustomTextColor,
-                backgroundColor: blockBackgroundColor,
-                color: blockTextColor,
+                backgroundColor: backgroundColor,
+                color: textColor,
             };
         
             return (

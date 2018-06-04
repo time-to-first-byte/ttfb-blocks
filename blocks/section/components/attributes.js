@@ -1,19 +1,23 @@
 const attributes = {
-    blockBackgroundColor: {
+    backgroundColor: {
         type: 'string',
         default: 'rgba(0, 0, 0, .0625)',
     },
-    blockTextColor: {
+    textColor: {
         type: 'string',
     },
-    blockAlignement: {
+    alignement: {
         type: 'string',
     },
-    blockVerticalPadding: {
+    verticalPadding: {
         type: 'number',
         default: 3
     },
-    blockVerticalMargin: {
+    verticalMargin: {
+        type: 'number',
+        default: 2
+    },
+    horizontalPadding: {
         type: 'number',
         default: 2
     },

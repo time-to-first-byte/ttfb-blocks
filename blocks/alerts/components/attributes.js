@@ -1,14 +1,17 @@
 const attributes = {
-    alertAlignment: {
+    alignment: {
         type: 'string',
-        default: ""
     },
-    alertBackgroundColor: {
+    backgroundColor: {
         type: 'string',
-        default: 'rgba(0, 0, 0, .0625)',
+        default: 'rgb(142, 209, 252)',
     },
-    alertTextColor: {
+    textColor: {
         type: 'string',
+    },
+    iconName: {
+        type: 'string',
+        default: 'fas fa-lightbulb fa-2x',
     },
 };
 

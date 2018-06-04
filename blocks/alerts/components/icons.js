@@ -1,7 +1,10 @@
 const icons = {};
 
-icons.dismiss = <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns='http://www.w3.org/2000/svg' width="20" height="20" viewBox="0 0 20 20">
-    <path d="M10 2c4.42 0 8 3.58 8 8s-3.58 8-8 8-8-3.58-8-8 3.58-8 8-8zM15 13l-3-3 3-3-2-2-3 3-3-3-2 2 3 3-3 3 2 2 3-3 3 3z"></path>
+icons.alert = <svg height='16' viewBox='0 0 16 16' width='16' xmlns='http://www.w3.org/2000/svg'>
+<g fill='#111'>
+    <path d='m9 7c0-.6-.4-1-1-1h-3v2h2v6h-2v2h6v-2h-2z' />
+    <circle cx='7.5' cy='2.5' r='1.5' />
+</g>
 </svg>;
 
 export default icons;

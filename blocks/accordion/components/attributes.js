@@ -1,21 +1,12 @@
 const attributes = {
-    accordionTitle: {
+    title: {
         type: 'string',
     },
-    accordionText: {
-        type: 'array',
-        selector: '.ttfb-accordion-text',
-        source: 'children',
-    },
-    accordionAlignment: {
+    alignment: {
         type: 'string',
         default: ""
     },
-    accordionFontSize: {
-        type: 'number',
-        default: 18
-    },
-    accordionOpen: {
+    open: {
         type: 'boolean',
         default: false
     },

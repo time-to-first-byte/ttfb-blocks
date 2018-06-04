@@ -18,12 +18,12 @@ export default class Inspector extends Component {
         super( ...arguments );
     }
     render() {
-        const { attributes: { blockAlignement }, setAttributes } = this.props;
+        const { attributes: { alignement }, setAttributes } = this.props;
         return (
             <BlockControls>
                 <BlockAlignmentToolbar
-                    value={ blockAlignement }
-                    onChange={ blockAlignement => setAttributes( { blockAlignement } ) }
+                    value={ alignement }
+                    onChange={ alignement => setAttributes( { alignement } ) }
                 />
             </BlockControls>
         );

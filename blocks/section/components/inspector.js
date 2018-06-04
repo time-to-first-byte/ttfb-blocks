@@ -37,58 +37,55 @@ export default class Inspector extends Component {
 	render() {
 
 		// Setup the attributes
-        const { attributes: { blockBackgroundColor, blockTextColor, blockVerticalMargin, blockVerticalPadding }, setAttributes } = this.props;
-
-        /*const {
-            attributes,
-            setAttributes,
-            blockBackgroundColor, 
-            blockTextColor, 
-            blockVerticalMargin, 
-            blockVerticalPadding, 
-            blockHorizontalPadding
-        } = this.props;*/
+        const { attributes: { backgroundColor, textColor, verticalMargin, verticalPadding, horizontalPadding }, setAttributes } = this.props;
 
 		return (
 		<InspectorControls key="inspector">
             
 			<PanelColor
                 title={ __( 'Background color', 'ttfb-blocks' ) }
-                colorValue={ blockBackgroundColor }
+                colorValue={ backgroundColor }
                 initialOpen={ false }
             >
                 <ColorPalette
-                    value={ blockBackgroundColor }
-                    onChange={ blockBackgroundColor => setAttributes( { blockBackgroundColor } ) }
+                    value={ backgroundColor }
+                    onChange={ backgroundColor => setAttributes( { backgroundColor } ) }
                 />
             </PanelColor>
 
             <PanelColor
                 title={ __( 'Text color', 'ttfb-blocks' ) }
-                colorValue={ blockTextColor }
+                colorValue={ textColor }
                 initialOpen={ false }
             >
                 <ColorPalette
-                    value={ blockTextColor }
-                    onChange={ blockTextColor => setAttributes( { blockTextColor } ) }
+                    value={ textColor }
+                    onChange={ textColor => setAttributes( { textColor } ) }
                 />
             </PanelColor>
             
-            <PanelBody>
+            <PanelBody
+                title={ __( 'Spacing options', 'ttfb-blocks' ) }
+                initialOpen={ false }
+            >
                 <RangeControl
                     label={ __( 'Vertical Margin', 'ttfb-blocks' ) }
-                    value={ blockVerticalMargin }
-                    onChange={ blockVerticalMargin => setAttributes( { blockVerticalMargin } ) }
+                    value={ verticalMargin }
+                    onChange={ verticalMargin => setAttributes( { verticalMargin } ) }
                     min={ 0 }
                     max={ 4 }
                 />
-            </PanelBody>
-
-            <PanelBody>
                 <RangeControl
                     label={ __( 'Vertical Padding', 'ttfb-blocks' ) }
-                    value={ blockVerticalPadding }
-                    onChange={ blockVerticalPadding => setAttributes( { blockVerticalPadding } ) }
+                    value={ verticalPadding }
+                    onChange={ verticalPadding => setAttributes( { verticalPadding } ) }
+                    min={ 1 }
+                    max={ 4 }
+                />
+                <RangeControl
+                    label={ __( 'Horizontal Padding', 'ttfb-blocks' ) }
+                    value={ horizontalPadding }
+                    onChange={ horizontalPadding => setAttributes( { horizontalPadding } ) }
                     min={ 1 }
                     max={ 4 }
                 />

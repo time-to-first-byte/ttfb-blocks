@@ -39,15 +39,15 @@ export default class Inspector extends Component {
 	render() {
 
 		// Setup the attributes
-        const { attributes: { accordionTitle, accordionText, accordionFontSize, accordionOpen }, setAttributes } = this.props;
+        const { attributes: { open }, setAttributes } = this.props;
 
 		return (
 		<InspectorControls key="inspector">
 			<PanelBody>
 				<ToggleControl
 					label={ __( 'Open by default' ) }
-					checked={ accordionOpen }
-                    onChange={ accordionOpen => setAttributes( { accordionOpen } ) }
+					checked={ open }
+                    onChange={ open => setAttributes( { open } ) }
 				/>
 			</PanelBody>
 		</InspectorControls>

@@ -34,6 +34,15 @@ function ttfb_blocks_editor_scripts()
         filemtime( plugin_dir_path( __FILE__ ) . $editorStylePath )
     );
 
+    wp_enqueue_style(
+        'fontawesome',
+        'https://use.fontawesome.com/releases/v5.0.13/css/all.css',
+        [ 'wp-blocks' ],
+        filemtime( plugin_dir_path( __FILE__ ) . $editorStylePath )
+    );
+
+    
+
 }
 
 // Hook scripts function into block editor hook

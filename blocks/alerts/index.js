@@ -48,56 +48,107 @@ export default registerBlockType(
     {
         title: __( 'TTFB Alerts' ),
         category: 'common',
-        icon: icons.dismiss,
+        icon: 'lightbulb',
         keywords: [
             __( 'Alerts' ),
         ],
         attributes,
         getEditWrapperProps( attributes ) {
-            const { alertAlignment } = attributes;
-            if ( 'left' === alertAlignment || 'right' === alertAlignment || 'full' === alertAlignment || 'wide' === alertAlignment ) {
-                return { 'data-align': alertAlignment };
+            const { alignment } = attributes;
+            if ( 'left' === alignment || 'right' === alignment || 'full' === alignment || 'wide' === alignment ) {
+                return { 'data-align': alignment };
             }
         },
 
         edit: props => {
 
-            const { attributes: { alertBackgroundColor, alertTextColor }, attributes, isSelected, className, setAttributes } = props;
-            
+            const { attributes: { backgroundColor, textColor, iconName }, attributes, isSelected, className, setAttributes } = props;
 
             return [
                 isSelected && <Inspector { ...{ setAttributes, ...props} } />,
                 <div
                     className={ classnames(
-                        'ttfb-blocks-alert',
+                        'ttfb-alert',
+                        'p2',
+                        'mxn2',
                     ) }
                 >
-
-                    <InnerBlocks
+                    <div
+                        style={ {
+                            backgroundColor: backgroundColor,
+                            color: textColor,
+                        } }
                         className={ classnames(
-                            'ttfb-alert-text',
-                            'p2',
-                            'child-mt0',
-                            'child-mb0',
-                            'border',
-                            'border-gray',
+                            'p0',
+                            'flex',
+                            'flex-stretch',
+                            'rounded',
                         ) }
-                    />
+                    >
+                    {iconName &&
+                        <div
+                            className={ classnames(
+                                'alert-icon',
+                                'px2',
+                                'py2',
+                                'bg-darken-1',
+                            ) }
+                        >
+                            <i 
+                                className={ classnames(
+                                    iconName,
+                                    'has-darken-4-color',
+                                ) }
+                            ></i>
+                        </div>
+                    }
+
+                        
+                        <div class="flex-auto px2">
+                            <InnerBlocks
+                                className={ classnames(
+                                    'p2',
+                                    'child-mt0',
+                                    'child-mb0',
+                                    'border',
+                                    'border-gray',
+                                ) }
+                            />
+                        </div>
+                    </div>
                 </div>
             ];
         },
 
         save: props => {
 
-            const { attributes: { alertBackgroundColor, alertTextColor }, attributes } = props;
+            const { attributes: { backgroundColor, textColor }, attributes } = props;
+
+            const blockClasses = classnames( 
+                
+            );
+
+            const blockStyle = {
+                backgroundColor: backgroundColor,
+                color: textColor,
+            };
 
             return (
                 <div
-                    className={ classnames(
-                        'ttfb-blocks-alert',
-                    ) }
+                    style={ blockStyle }
+                    className={ blockClasses }
                 >
-                    <InnerBlocks.Content />
+                    <div
+                        className={ classnames(
+                            'inner-content',
+                            'ml-auto',
+                            'mr-auto',
+                            'child-mt0',
+                            'child-mb0',
+                        ) }
+                    >
+                        <InnerBlocks.Content />
+                    </div>
                 </div>
             );
         },

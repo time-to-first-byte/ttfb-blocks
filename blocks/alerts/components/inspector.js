@@ -25,7 +25,8 @@ const {
 	PanelRow,
 	PanelColor,
 	RangeControl,
-	ToggleControl,
+    ToggleControl,
+    TextControl,
 } = wp.components;
 
 /**
@@ -40,34 +41,46 @@ export default class Inspector extends Component {
 	render() {
 
 		// Setup the attributes
-        const { attributes: { alertBackgroundColor, alertTextColor }, setAttributes } = this.props;
+        const { attributes: { backgroundColor, textColor, iconName }, setAttributes } = this.props;
 
 
 		return (
             <InspectorControls key="inspector">
-                <PanelBody>
                     <PanelColor
-                    title={ __( 'Background color', 'ttfb-blocks' ) }
-                    colorValue={ alertBackgroundColor }
+                        title={ __( 'Background color', 'ttfb-blocks' ) }
+                        colorValue={ backgroundColor }
+                        initialOpen={ false }
+                    >
+                        <ColorPalette
+                            value={ backgroundColor }
+                            onChange={ backgroundColor => setAttributes( { backgroundColor } ) }
+                        />
+                    </PanelColor>
+                
+                    <PanelColor
+                        title={ __( 'Text color', 'ttfb-blocks' ) }
+                        colorValue={ textColor }
+                        initialOpen={ false }
+                    >
+                        <ColorPalette
+                            value={ textColor }
+                            onChange={ textColor => setAttributes( { textColor } ) }
+                        />
+                    </PanelColor>
+
+                <PanelBody
+                    title={ __( 'Icon', 'ttfb-blocks' ) }
                     initialOpen={ false }
                 >
-                    <ColorPalette
-                        value={ alertBackgroundColor }
-                        onChange={ alertBackgroundColor => setAttributes( { alertBackgroundColor } ) }
+                    <TextControl
+                        label={ __( 'Icon name', 'ttfb-blocks' ) }
+                        help={ __( 'Ex: fas fa-link', 'ttfb-blocks' ) }
+                        value={ iconName }
+                        onChange={ iconName => setAttributes( { iconName } ) }
                     />
-                </PanelColor>
-
-                <PanelColor
-                    title={ __( 'Text color', 'ttfb-blocks' ) }
-                    colorValue={ alertTextColor }
-                    initialOpen={ false }
-                >
-                    <ColorPalette
-                        value={ alertTextColor }
-                        onChange={ blockTextColor => setAttributes( { alertTextColor } ) }
-                    />
-                </PanelColor>
-
+                    
+                    <div>All icons on <a href="https://fontawesome.com/icons?d=gallery&m=free">fontawesome.com</a>.</div>
+                    <div><strong>Size options:</strong> fa-lg, fa-2x, fa-3x, fa-4x, fa-5x, fa-6x</div>
                     
                 </PanelBody>
             </InspectorControls>
