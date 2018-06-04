@@ -7,8 +7,7 @@ const {
     AlignmentToolbar,
     BlockControls,
     BlockAlignmentToolbar,
-    InspectorControls,
-} = wp.blocks;
+} = wp.editor;
 
 
 /**

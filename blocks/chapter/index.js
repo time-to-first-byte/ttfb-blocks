@@ -17,14 +17,19 @@ import './editor.scss';
 const { __,
     sprintf 
 } = wp.i18n;
+
 const {
-    registerBlockType,
     RichText,
     InnerBlocks,
     MediaUpload,
     Editable,
-  BlockControls,
+    BlockControls,
+} = wp.editor;
+
+const {
+    registerBlockType,
 } = wp.blocks;
+
 const {
     Button,
 } = wp.components;
